@@ -44,8 +44,18 @@ def dĺžka_audia(súbor):
 
 def transkribuj(súbor, model_názov="base", s_rečníkmi=False, hf_token=None):
     """Transkribuje audio súbor do slovenčiny. S rečníkmi = formát Hovoriaci 1/2."""
+    import torch
     import whisper
-    model = whisper.load_model(model_názov)
+    
+    # Detekcia GPU: MPS (Apple Silicon), CUDA (NVIDIA), alebo CPU
+    if torch.backends.mps.is_available():
+        device = "mps"
+    elif torch.cuda.is_available():
+        device = "cuda"
+    else:
+        device = "cpu"
+    
+    model = whisper.load_model(model_názov, device=device)
     výsledok = model.transcribe(str(súbor), language="sk")
     text = výsledok["text"]
     segments = výsledok.get("segments", [])
