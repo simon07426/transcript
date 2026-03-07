@@ -15,6 +15,39 @@ pip install -r requirements.txt
 python transcript.py
 ```
 
+### Mac UI štart cez terminál
+
+```bash
+./scripts/run-ui.sh
+```
+
+Ak GUI neštartuje, použi:
+
+```bash
+pyenv local 3.11.11
+python3 -m pip install -r requirements.txt
+./scripts/run-ui.sh
+```
+
+## CLI použitie
+
+```bash
+python transcript.py --input audio.m4a --output audio.txt --model large-v3 --backend auto
+```
+
+- pri CLI sa uloží `audio.txt` aj `audio.md`
+- `--backend auto` vyberie najrýchlejší dostupný backend (`mlx` na Apple Silicon, inak `mps/cuda/cpu`)
+
+## Build .dmg (macOS)
+
+```bash
+./scripts/build-macos-dmg.sh
+```
+
+Výstup:
+- `.app`: `dist/M4A Transkriptor.app`
+- `.dmg`: `dist/M4A-Transkriptor.dmg`
+
 ## Použitie
 
 1. Klikni na „Vybrať...“ a vyber M4A (alebo MP3/WAV) súbor
@@ -34,5 +67,11 @@ Ak chceš formát s označením kto hovorí:
 3. Súhlas s podmienkami modelu: [pyannote/speaker-diarization-community-1](https://huggingface.co/pyannote/speaker-diarization-community-1) (a súvisiacich modelov)
 4. Vytvor token na [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
 5. Vlož token do poľa v aplikácii
+
+CLI s diarizáciou:
+
+```bash
+python transcript.py --input audio.m4a --output audio.txt --rečníci --hf-token hf_xxx --backend auto
+```
 
 **Poznámka:** Pri prvom spustení sa stiahne model Whisper (~140 MB pre „base“). Transkripcia prebieha lokálne – žiadne dáta sa neodosielajú na internet (okrem sťahovania modelov).

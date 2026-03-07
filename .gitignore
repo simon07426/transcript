@@ -1,0 +1,19 @@
+# Build artifacts (pyinstaller)
+build/
+dist/
+dist 2/
+.pyinstaller-config/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
